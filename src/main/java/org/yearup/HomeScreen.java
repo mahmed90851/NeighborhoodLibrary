@@ -7,22 +7,17 @@ public class HomeScreen {
         String input = scanner.next();
 
         switch (input) {
-            case "1":
-                availableBooks();
-                break;
-            case "2":
-                checkedOut();
-                break;
-            case "0":
-                exitProgram();
-                break;
-            default:
+            case "1" -> availableBooks();
+            case "2" -> checkedOut();
+            case "0" -> exitProgram();
+            default -> {
                 System.out.println("Invalid input. Please try again.");
                 main(args);
+            }
         }
     }
 
-    private static void displayMainMenu() {
+    public static void displayMainMenu() {
         System.out.println("Main Menu:");
         System.out.println("[1] Show Available Books");
         System.out.println("[2] Show Checked Out Books");
@@ -37,11 +32,9 @@ public class HomeScreen {
         System.out.println("Books Available: ");
         for (Book book : booksAvailable) {
             if (!book.isCheckedOut()) {
-                System.out.println(
-                        "[" + book.getId() + "] " +
-                                book.getTitle() + ", " + "ID: " +
-                                book.getId() + ", ISBN: " +
-                                book.getIsbn());
+                System.out.printf("[%d] %s, ID: %d, ISBN: %s%n",
+                        book.getId(), book.getTitle(), book.getId(), book.getIsbn());
+
             }
         }
 
@@ -52,19 +45,19 @@ public class HomeScreen {
         String input = scanner.nextLine();
 
         if (input.equals("0")) {
-            main(new String[]{});
+            main(null);
         } else {
             try {
                 int bookIndex = Integer.parseInt(input);
                 if (bookIndex < 0 || bookIndex >= booksAvailable.length || booksAvailable[bookIndex].isCheckedOut()) {
-                    System.out.println("Invalid book selection.");
+                    System.out.println("Invalid book selection :(");
                     availableBooks();
                 } else {
                     System.out.println("Enter your name to check out \"" + booksAvailable[bookIndex].getTitle() + "\"");
                     input = scanner.nextLine();
                     booksAvailable[bookIndex].checkOut(input);
 
-                    System.out.println("\"" + booksAvailable[bookIndex].getTitle() + "\""  + " has been checked out.");
+                    System.out.println("\"" + booksAvailable[bookIndex].getTitle() + "\""  + " has been checked out :)");
 
                     availableBooks();
                 }
@@ -82,7 +75,7 @@ public class HomeScreen {
         System.out.println("Your checked out books: ");
 
         for (int i = 0; i < booksCheckedOut.length; i++){
-            if (booksCheckedOut[i].isCheckedOut() == true){
+            if (booksCheckedOut[i].isCheckedOut()){
                 System.out.println(
                         "[" + i + "] " +
                                 booksCheckedOut[i].getTitle() + ", " + "ID: " +
@@ -115,20 +108,20 @@ public class HomeScreen {
         for (Book book : booksCheckedIn) {
             if (bookId == book.getId()) {
                 book.checkIn();
-                System.out.println(book.getTitle() + " has been checked in.");
+                System.out.println(book.getTitle() + " has been checked in :)");
                 bookFound = true;
                 break;
             }
         }
 
         if (!bookFound) {
-            System.out.println("Book with ID " + bookId + " not found.");
+            System.out.println("Book with ID " + bookId + " not found :(");
         }
 
         main(null);
     }
     private static void exitProgram() {
-        System.out.println("Exiting program...");
+        System.out.println("Exiting program :)");
         System.exit(0);
     }
 
