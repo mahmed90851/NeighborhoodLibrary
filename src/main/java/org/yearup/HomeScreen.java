@@ -108,15 +108,21 @@ public class HomeScreen {
         Scanner scanner = new Scanner(System.in);
         Book[] booksCheckedIn = BookInventory.booksAvailable;
 
-        System.out.println("Enter the ID of book you are checking in: ");
+        System.out.println("Enter the ID of the book you are checking in:");
+        int bookId = Integer.parseInt(scanner.nextLine());
 
-        int input = scanner.nextInt();
-
-        for (Book book : booksCheckedIn){
-            if (input == book.getId()){
+        boolean bookFound = false;
+        for (Book book : booksCheckedIn) {
+            if (bookId == book.getId()) {
                 book.checkIn();
-                System.out.println(book.getTitle() + " was Checked In!");
+                System.out.println(book.getTitle() + " has been checked in.");
+                bookFound = true;
+                break;
             }
+        }
+
+        if (!bookFound) {
+            System.out.println("Book with ID " + bookId + " not found.");
         }
 
         main(null);
