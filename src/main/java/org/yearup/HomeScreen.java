@@ -1,18 +1,21 @@
 package org.yearup;
 import java.util.Scanner;
 public class HomeScreen {
+    static Scanner scanner = null;
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         displayMainMenu();
-        String input = scanner.next();
+        while (true) {
+            String input = scanner.nextLine();
 
-        switch (input) {
-            case "1" -> availableBooks();
-            case "2" -> checkedOut();
-            case "0" -> exitProgram();
-            default -> {
-                System.out.println("Invalid input. Please try again.");
-                main(args);
+
+            switch (input) {
+                case "1" -> availableBooks();
+                case "2" -> checkedOut();
+                case "0" -> exitProgram();
+                default -> {
+                    System.out.println("Invalid input. Please try again.");
+                }
             }
         }
     }
@@ -26,17 +29,10 @@ public class HomeScreen {
 
 
     public static void availableBooks() {
-        Scanner scanner = new Scanner(System.in);
         Book[] booksAvailable = BookInventory.booksAvailable;
 
         System.out.println("Books Available: ");
-        for (Book book : booksAvailable) {
-            if (!book.isCheckedOut()) {
-                System.out.printf("[%d] %s, ID: %d, ISBN: %s%n",
-                        book.getId(), book.getTitle(), book.getId(), book.getIsbn());
-
-            }
-        }
+        listAvailableBooks(booksAvailable);
 
         System.out.println(
                 "[0] Return to Main Menu"
@@ -68,8 +64,17 @@ public class HomeScreen {
         }
     }
 
+    private static void listAvailableBooks(Book[] booksAvailable) {
+        for (Book book : booksAvailable) {
+            if (!book.isCheckedOut()) {
+                System.out.printf("[%d] %s, ID: %d, ISBN: %s%n",
+                        book.getId(), book.getTitle(), book.getId(), book.getIsbn());
+
+            }
+        }
+    }
+
     public static void checkedOut() {
-        Scanner scanner = new Scanner(System.in);
         Book[] booksCheckedOut = BookInventory.booksAvailable;
 
         System.out.println("Your checked out books: ");
@@ -92,13 +97,10 @@ public class HomeScreen {
         if (input.equals("1")){
             checkIn();
         }
-        else{
-            main(null);
-        }
+
     }
 
     public static void checkIn() {
-        Scanner scanner = new Scanner(System.in);
         Book[] booksCheckedIn = BookInventory.booksAvailable;
 
         System.out.println("Enter the ID of the book you are checking in:");
@@ -118,7 +120,6 @@ public class HomeScreen {
             System.out.println("Book with ID " + bookId + " not found :(");
         }
 
-        main(null);
     }
     private static void exitProgram() {
         System.out.println("Exiting program :)");
