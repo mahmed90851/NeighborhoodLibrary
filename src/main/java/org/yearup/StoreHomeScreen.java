@@ -1,7 +1,7 @@
 package org.yearup;
 import java.util.Scanner;
 public class StoreHomeScreen {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main()  {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Main Menu:");
@@ -22,18 +22,18 @@ public class StoreHomeScreen {
         }
     }
 
-    public static void availableBooks() throws InterruptedException {
+    public static void availableBooks() {
         Scanner scanner = new Scanner(System.in);
-        Book[] books = BookInventory.booksAvailable;
+        Book[] booksAvailable = BookInventory.booksAvailable;
 
         System.out.println("Books Available: ");
-        for (int i = 0; i < books.length; i++) {
-            if (books[i].isCheckedOut() == false) {
+        for (int i = 0; i < booksAvailable.length; i++) {
+            if (booksAvailable[i].isCheckedOut() == false) {
                 System.out.println(
                         "[" + i + "] " +
-                                books[i].getTitle() + ", " + "ID: " +
-                                books[i].getId() + ", ISBN: " +
-                                books[i].getIsbn());
+                                booksAvailable[i].getTitle() + ", " + "ID: " +
+                                booksAvailable[i].getId() + ", ISBN: " +
+                                booksAvailable[i].getIsbn());
             }
         }
         System.out.println(
@@ -44,33 +44,33 @@ public class StoreHomeScreen {
         String choice = input;
 
         if (input.equals("0")) {
-            main(null);
+            main();
         } else {
-            System.out.println("Enter your name to check out \"" + books[Integer.parseInt(choice)].getTitle() + "\"");
+            System.out.println("Enter your name to check out \"" + booksAvailable[Integer.parseInt(choice)].getTitle() + "\"");
             input = scanner.nextLine();
-            books[Integer.parseInt(choice)].checkOut(input);
+            booksAvailable[Integer.parseInt(choice)].checkOut(input);
 
-            System.out.println("\"" + books[Integer.parseInt(choice)].getTitle() + "\""  + " has been checked out.");
+            System.out.println("\"" + booksAvailable[Integer.parseInt(choice)].getTitle() + "\""  + " has been checked out.");
 
             availableBooks();
 
         }
 
     }
-    public static void checkedOut() throws InterruptedException {
+    public static void checkedOut() {
         Scanner scanner = new Scanner(System.in);
-        Book[] books = BookInventory.booksAvailable;
+        Book[] booksCheckedOut = BookInventory.booksAvailable;
 
         System.out.println("Your Checked-Out Books:");
 
-        for (int i = 0; i < books.length; i++){
-            if (books[i].isCheckedOut() == true){
+        for (int i = 0; i < booksCheckedOut.length; i++){
+            if (booksCheckedOut[i].isCheckedOut() == true){
                 System.out.println(
                         "[" + i + "] " +
-                                books[i].getTitle() + ", " + "ID: " +
-                                books[i].getId() + ", ISBN: " +
-                                books[i].getIsbn() + ", checked out by " +
-                                books[i].getCheckedOutTo());
+                                booksCheckedOut[i].getTitle() + ", " + "ID: " +
+                                booksCheckedOut[i].getId() + ", ISBN: " +
+                                booksCheckedOut[i].getIsbn() + ", checked out by " +
+                                booksCheckedOut[i].getCheckedOutTo());
             }
         }
         System.out.println("[1] Check In a book");
@@ -82,25 +82,25 @@ public class StoreHomeScreen {
             checkIn();
         }
         else{
-        main(null);
+            main();
         }
     }
 
-    public static void checkIn() throws InterruptedException {
+    public static void checkIn() {
         Scanner scanner = new Scanner(System.in);
-        Book[] books = BookInventory.booksAvailable;
+        Book[] booksCheckedIn = BookInventory.booksAvailable;
 
-        System.out.println("Enter ID of book you are checking in:");
+        System.out.println("Enter the ID of book you are checking in: ");
 
         int input = scanner.nextInt();
 
-        for (Book book : books){
+        for (Book book : booksCheckedIn){
             if (input == book.getId()){
                 book.checkIn();
-                System.out.println(book.getTitle() + " was successfully Checked In!");
+                System.out.println(book.getTitle() + " was Checked In!");
             }
         }
 
-        main(null);
+        main();
     }
 }
